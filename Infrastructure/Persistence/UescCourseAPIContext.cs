@@ -9,8 +9,12 @@ public class UescCourseAPIContext : DbContext
       {
          Database.EnsureCreated();
       }
-   
-      public DbSet<Course> Courses { get; set; }
+
+    public UescCourseAPIContext()
+    {
+    }
+
+    public DbSet<Course> Courses { get; set; }
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
@@ -20,6 +24,10 @@ public class UescCourseAPIContext : DbContext
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
-            throw new System.NotImplementedException();
+            var stringconnection = "server=localhost;database=uesc_courses;user=uesc_courses;password=colcicuesc";
+            var serverVersion = ServerVersion.AutoDetect(stringconnection);
+            optionsBuilder.UseMySql(stringconnection,serverVersion)
+                  .EnableSensitiveDataLogging()
+                  .EnableDetailedErrors();
       }
 }
