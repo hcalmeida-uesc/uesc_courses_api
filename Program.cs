@@ -1,14 +1,14 @@
 using UescCoursesAPI.Infrastructure.Persistence;
 using UescCoursesAPI.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 var app = builder.Build();
 
 var context = new UescCourseAPIContext(new DbContextOptions<UescCourseAPIContext>());
-
 
 app.MapGet("/", () => "APIS de Cursos da UESC");
 
@@ -35,6 +35,15 @@ app.MapDelete("/courses/{id}", (int id) => {
       context.Courses.Remove(courseToDelete);
       context.SaveChanges();
       return courseToDelete;
+});
+
+app.MapGet("/courses/{id}/pedagogicProjects", (int id) => context.PedagogicProjects.Where(p => p.CourseId == id).ToList());
+
+app.MapPost("/courses/{id}/pedagogicProjects", (int id, PedagogicProject proj) => {
+      proj.CourseId = id;
+      context.PedagogicProjects.Add(proj);
+      context.SaveChanges();
+      return proj;
 });
 
 app.Run();

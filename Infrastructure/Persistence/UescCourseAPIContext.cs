@@ -7,19 +7,22 @@ public class UescCourseAPIContext : DbContext
 {
       public UescCourseAPIContext(DbContextOptions<UescCourseAPIContext> options) : base(options)
       {
+         //Database.EnsureDeleted();
          Database.EnsureCreated();
       }
 
-    public UescCourseAPIContext()
-    {
-    }
 
     public DbSet<Course> Courses { get; set; }
+    public DbSet<PedagogicProject> PedagogicProjects { get; set; }
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
             modelBuilder.Entity<Course>().ToTable("Courses");
             modelBuilder.Entity<Course>().HasKey(c => c.CourseId);
+
+            modelBuilder.Entity<PedagogicProject>().ToTable("PedagogicProjects");
+            modelBuilder.Entity<PedagogicProject>().HasKey(p => p.PedagogicProjectId);
+            modelBuilder.Entity<PedagogicProject>().HasOne(p => p.Course).WithMany(c => c.PedagogicProjects).HasForeignKey(p => p.CourseId);
       }
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
