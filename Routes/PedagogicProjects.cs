@@ -7,11 +7,11 @@ public static class PedagogicProjects
 {
    public static void RegisterPedagogicProjectsEndpoints(this IEndpointRouteBuilder routes)
    {
-      var pedagogicProjectsRoutes = routes.MapGroup("/pedagogicProjects");
+      var pedagogicProjectsRoutes = routes.MapGroup("/courses/{id}/pedagogicProjects");
 
-      pedagogicProjectsRoutes.MapGet("/courses/{id}/pedagogicProjects", (int id, UescCourseAPIContext context) => context.PedagogicProjects.Where(p => p.CourseId == id).ToList());
+      pedagogicProjectsRoutes.MapGet("", (int id, UescCourseAPIContext context) => context.PedagogicProjects.Where(p => p.CourseId == id).ToList());
 
-      pedagogicProjectsRoutes.MapPost("/courses/{id}/pedagogicProjects", (int id, PedagogicProject proj, UescCourseAPIContext context) =>
+      pedagogicProjectsRoutes.MapPost("", (int id, PedagogicProject proj, UescCourseAPIContext context) =>
       {
          proj.CourseId = id;
          context.PedagogicProjects.Add(proj);

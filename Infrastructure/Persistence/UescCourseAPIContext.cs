@@ -14,6 +14,8 @@ public class UescCourseAPIContext : DbContext
 
     public DbSet<Course> Courses { get; set; }
     public DbSet<PedagogicProject> PedagogicProjects { get; set; }
+    public DbSet<Curriculum> Curriculums { get; set; }
+    public DbSet<Discipline> Disciplines { get; set; }
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
@@ -23,6 +25,14 @@ public class UescCourseAPIContext : DbContext
             modelBuilder.Entity<PedagogicProject>().ToTable("PedagogicProjects");
             modelBuilder.Entity<PedagogicProject>().HasKey(p => p.PedagogicProjectId);
             modelBuilder.Entity<PedagogicProject>().HasOne(p => p.Course).WithMany(c => c.PedagogicProjects).HasForeignKey(p => p.CourseId);
+
+            modelBuilder.Entity<Curriculum>().ToTable("Curriculums");
+            modelBuilder.Entity<Curriculum>().HasKey(c => c.CurriculumId);
+            modelBuilder.Entity<Curriculum>().HasOne(c => c.PedagogicProject).WithOne(p => p.Curriculum).HasForeignKey<Curriculum>(c => c.PedagogicProjectId);
+
+            modelBuilder.Entity<Discipline>().ToTable("Disciplines");
+            modelBuilder.Entity<Discipline>().HasKey(d => d.DisciplineId);
+            modelBuilder.Entity<Discipline>().HasMany(d => d.Curriculums).WithMany(c => c.Disciplines);
       }
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
