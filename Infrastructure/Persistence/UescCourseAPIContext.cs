@@ -27,10 +27,19 @@ public class UescCourseAPIContext : DbContext
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
-            var stringconnection = "server=localhost;database=uesc_courses;user=uesc_courses;password=colcicuesc";
-            var serverVersion = ServerVersion.AutoDetect(stringconnection);
-            optionsBuilder.UseMySql(stringconnection,serverVersion)
+            #region Mysql ConnectionString
+            // var stringconnection = "server=localhost;database=uesc_courses;user=uesc_courses;password=colcicuesc";
+            // var serverVersion = ServerVersion.AutoDetect(stringconnection);
+            // optionsBuilder.UseMySql(stringconnection,serverVersion)
+            //       .EnableSensitiveDataLogging()
+            //       .EnableDetailedErrors();
+            #endregion
+
+            #region SqLite ConnectionString
+            var stringconnection = "Data Source=uesc_courses.db";
+            optionsBuilder.UseSqlite(stringconnection)
                   .EnableSensitiveDataLogging()
                   .EnableDetailedErrors();
+            #endregion
       }
 }
