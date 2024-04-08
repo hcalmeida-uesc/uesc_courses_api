@@ -9,5 +9,5 @@ public class Curriculum
    public string? Status { get; set; }
    public int PedagogicProjectId { get; set; }
    public virtual PedagogicProject? PedagogicProject { get; set; }
-   public virtual ICollection<Discipline> Disciplines { get; set; }
+   public virtual ICollection<Discipline>? Disciplines { get; set; }
 }
