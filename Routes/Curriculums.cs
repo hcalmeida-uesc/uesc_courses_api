@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using UescCoursesAPI.Domain;
 using UescCoursesAPI.Infrastructure.Persistence;
 
@@ -5,11 +6,11 @@ namespace UescCoursesAPI.API.Endpoints;
 
 public static class Curriculums
 {
-   public static void RegisterCurriculumssEndpoints(this IEndpointRouteBuilder routes)
+   public static void RegisterCurriculumsEndpoints(this IEndpointRouteBuilder routes)
    {
-      var curriculumsRoutes = routes.MapGroup("/curriculums");
+      var curriculumsRoutes = routes.MapGroup("/curriculums/");
       
-      curriculumsRoutes.MapGet("", (UescCourseAPIContext context) => context.Curriculums.ToList());
+      curriculumsRoutes.MapGet("pedagogicProjects/{id}", (UescCourseAPIContext context, int id) => context.Curriculums.Include(c => c.Disciplines).Where(c => c.PedagogicProjectId == id).ToList());
 
       curriculumsRoutes.MapPost("", (Curriculum curriculum, UescCourseAPIContext context) =>
       {
@@ -17,5 +18,6 @@ public static class Curriculums
          context.SaveChanges();
          return curriculum;
       });
+
    }
 }

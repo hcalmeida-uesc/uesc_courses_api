@@ -24,6 +24,7 @@ var app = builder.Build();
 //registrando os endpoints
 app.RegisterCoursesEndpoints();
 app.RegisterPedagogicProjectsEndpoints();
-app.RegisterCurriculumssEndpoints();
+app.RegisterCurriculumsEndpoints();
+app.RegisterDisciplinesEndpoints();
 
 app.Run();

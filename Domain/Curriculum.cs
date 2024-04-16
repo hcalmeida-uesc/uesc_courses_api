@@ -1,7 +1,6 @@
 ﻿namespace UescCoursesAPI.Domain;
 
 public class Curriculum
-
 {
    public int CurriculumId { get; set; }
    public int Workload { get; set; }
