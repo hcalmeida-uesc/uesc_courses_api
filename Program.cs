@@ -26,5 +26,6 @@ app.RegisterCoursesEndpoints();
 app.RegisterPedagogicProjectsEndpoints();
 app.RegisterCurriculumsEndpoints();
 app.RegisterDisciplinesEndpoints();
+app.RegisterUsersEndpoints();
 
 app.Run();
