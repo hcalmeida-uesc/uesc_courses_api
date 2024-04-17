@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.Results;
 using UescCoursesAPI.Domain;
 using UescCoursesAPI.Infrastructure.Persistence;
 
@@ -12,11 +14,18 @@ public static class Users
       usersRoutes.MapGet("", (UescCourseAPIContext context) => context.Users.ToList());
 
       usersRoutes.MapGet("/{id}", (int id, UescCourseAPIContext context) => context.Users.FirstOrDefault(u => u.UserId == id));
-      usersRoutes.MapPost("", (User user, UescCourseAPIContext context) =>
+      usersRoutes.MapPost("", async (IValidator<User> validator, User user, UescCourseAPIContext context) =>
       {
+         ValidationResult validationResult = await validator.ValidateAsync(user);
+
+         if (!validationResult.IsValid)
+         {
+            return Results.ValidationProblem(validationResult.ToDictionary());
+         }
+
          context.Users.Add(user);
          context.SaveChanges();
-         return user;
+         return Results.Created($"/{user.UserId}",user);
       });
       usersRoutes.MapPut("/{id}", (int id, User user, UescCourseAPIContext context) =>
       {

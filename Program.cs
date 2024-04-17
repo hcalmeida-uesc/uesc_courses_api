@@ -3,6 +3,9 @@ using UescCoursesAPI.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using UescCoursesAPI.API.Endpoints;
+using FluentValidation;
+using Microsoft.AspNetCore.Identity;
+using UescCoursesAPI.Validators;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +15,9 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
 
 // Add AppContext to DI
 builder.Services.AddDbContext<UescCourseAPIContext>();
+
+// Add Validators to DI
+builder.Services.AddScoped<IValidator<User>, UserValidator>();
 
 var app = builder.Build();
 
