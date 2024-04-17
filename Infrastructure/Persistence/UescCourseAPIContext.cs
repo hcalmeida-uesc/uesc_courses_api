@@ -7,7 +7,7 @@ public class UescCourseAPIContext : DbContext
 {
       public UescCourseAPIContext(DbContextOptions<UescCourseAPIContext> options) : base(options)
       {
-         Database.EnsureCreated();
+         //Database.EnsureCreated();
       }
 
 
