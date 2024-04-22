@@ -55,7 +55,7 @@ public class UescCourseAPIContext : DbContext
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<User>().HasKey(u => u.UserId);
             modelBuilder.Entity<User>().HasData(
-                  new User { UserId = 1, Login = "admin", Password = "admin", Rules = "admin" }
+                  new User (1, "admin", "admin", UserRules.Admin )
             );
       }
 

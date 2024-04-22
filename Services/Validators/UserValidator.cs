@@ -1,11 +1,11 @@
 using FluentValidation;
-using UescCoursesAPI.Domain;
+using UescCoursesAPI.Services.DTO;
 
-namespace UescCoursesAPI.Validators;
+namespace UescCoursesAPI.Services.Validators;
 
-public class UserValidator : AbstractValidator<User>
+public class UserPostValidator : AbstractValidator<UserPostDTO>
 {
-   public UserValidator()
+   public UserPostValidator()
    {
       RuleFor(u => u.Login)
          .NotEmpty().WithMessage("O campo Login é obrigatório")
