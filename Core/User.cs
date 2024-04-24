@@ -1,4 +1,4 @@
-using UescCoursesAPI.Services.Utils;
+using UescCoursesAPI.Application;
 
 namespace UescCoursesAPI.Domain;
 
@@ -12,7 +12,7 @@ public class User
         private set 
         {
             _password = value ?? throw new ArgumentNullException(nameof(Password));
-            _password = Utils.EncryptString(_password);
+            _password = Utils.ComputeSha256Hash(_password);
         }
     }
     public UserRules Rules { get; private set; }
@@ -41,5 +41,12 @@ public class User
         Rules = rules;
 
         return this;
+    }
+
+    public UserRules Authenticate(string login, string password){
+        if (Login == login && Password == Utils.ComputeSha256Hash(password)){
+            return Rules;
+        }
+        return UserRules.Public;
     }
 }

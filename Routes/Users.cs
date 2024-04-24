@@ -15,7 +15,8 @@ public static class Users
 
       usersRoutes.MapGet("", (UescCourseAPIContext context) => context.Users.ToList());
 
-      usersRoutes.MapGet("/{id}", (int id, UescCourseAPIContext context) => context.Users.FirstOrDefault(u => u.UserId == id));
+      usersRoutes.MapGet("/{id}", (int id, UescCourseAPIContext context) => context.Users.FirstOrDefault(u => u.UserId == id))
+         .RequireAuthorization();
       
       usersRoutes.MapPost("", async (
          IValidator<UserPostDTO> validator,
